@@ -1,9 +1,31 @@
-- name: Create IPA Package
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install Cython==0.29.33 pillow kivy
+
+      - name: Create IPA Package
         run: |
           mkdir -p Payload/ottoman.app
           cp telefon_arayuz.py Payload/ottoman.app/main.py
           
-          # iOS için yürütülebilir basit bir başlatıcı script oluşturalım
           cat << 'EOF' > Payload/ottoman.app/main
           #!/bin/bash
           python3 "$(dirname "$0")/main.py"
@@ -36,3 +58,9 @@
           EOF
           
           zip -r ottoman_app.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: ottoman_app.ipa

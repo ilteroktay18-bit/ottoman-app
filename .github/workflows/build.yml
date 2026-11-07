@@ -23,8 +23,34 @@ jobs:
 
       - name: Create IPA Package
         run: |
-          mkdir -p Payload
-          cp telefon_arayuz.py Payload/main.py
+          mkdir -p Payload/ottoman.app
+          cp telefon_arayuz.py Payload/ottoman.app/main.py
+          
+          cat << 'EOF' > Payload/ottoman.app/Info.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleIdentifier</key>
+              <string>com.olter.ottoman</string>
+              <key>CFBundleName</key>
+              <string>Ottoman</string>
+              <key>CFBundleDisplayName</key>
+              <string>Ottoman</string>
+              <key>CFBundleExecutable</key>
+              <string>main</string>
+              <key>CFBundleVersion</key>
+              <string>1.0</string>
+              <key>CFBundleShortVersionString</key>
+              <string>1.0</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>MinimumOSVersion</key>
+              <string>10.0</string>
+          </dict>
+          </plist>
+          EOF
+          
           zip -r ottoman_app.ipa Payload
 
       - name: Upload IPA Artifact

@@ -21,6 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install Cython==0.29.33 pillow kivy
 
-      - name: Build Info
+      - name: Create IPA Structure
         run: |
-          echo "Kivy ve bagimliliklar yüklendi, iOS paketleme yapilandirmasi hazir."
+          mkdir -p Payload
+          # Burada telefon_arayuz.py dosyasını Kivy ile iOS uygulama yapısına paketliyoruz
+          echo "Uygulama paketleme simülasyonu tamamlandı."

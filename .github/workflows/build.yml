@@ -24,13 +24,11 @@ jobs:
       - name: Create IPA Package
         run: |
           mkdir -p Payload
-          # Projedeki ana dosyayı Payload içine kopyalıyoruz
           cp telefon_arayuz.py Payload/main.py
-          # .ipa arşivi oluşturuluyor
           zip -r ottoman_app.ipa Payload
 
       - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ios-ipa
           path: ottoman_app.ipa

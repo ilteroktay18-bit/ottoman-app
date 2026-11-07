@@ -21,8 +21,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install Cython==0.29.33 pillow kivy
 
-      - name: Create IPA Structure
+      - name: Create IPA Package
         run: |
           mkdir -p Payload
-          # Burada telefon_arayuz.py dosyasını Kivy ile iOS uygulama yapısına paketliyoruz
-          echo "Uygulama paketleme simülasyonu tamamlandı."
+          # Projedeki ana dosyayı Payload içine kopyalıyoruz
+          cp telefon_arayuz.py Payload/main.py
+          # .ipa arşivi oluşturuluyor
+          zip -r ottoman_app.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-ipa
+          path: ottoman_app.ipa
